@@ -1,9 +1,15 @@
 
-################### script for chopping contigs/scaffolds smaller than 5000kb #############################################
+##### script for removing contigs/scaffolds shorter than a given number of base pairs  #####
+#
+# first input is the assembly to be chopped, second input is the outputted file, third input is the number of base pairs 
+# Lets say you want to remove all the scaffolds shorter than 5000 base pairs:
+# $ python chop.scaff.under.npb.py <assembly.fa> <assembly_filtered.fa> 5000
+#
+
 import os
 import sys
 from itertools import groupby
-def filt_5kb(input_fasta,output_fasta):
+def filt_5kb(input_fasta,output_fasta,size):
   #fin = open(input_fasta,"r")
   #fout = open(input_fasta.replace(input_fasta.split("/")[-1],"filt_5kb_"+input_fasta.split("/")[-1]),"w")
   fout = open(output_fasta,"w")
@@ -17,8 +23,9 @@ def filt_5kb(input_fasta,output_fasta):
     #header = str(">"+header)
     seq = str(seq)
     seqlen = len(seq)
-    if seqlen >= 5000:
+    if seqlen >= int(size):
       fout.write(">"+header+"\n")
       fout.write(seq+"\n")
-filt_5kb(sys.argv[1],sys.argv[2])
-# first input is the assembly to be chopped, second input is the outputted file
+filt_5kb(sys.argv[1],sys.argv[2],sys.argv[3])
+
+
